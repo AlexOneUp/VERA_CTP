@@ -19,8 +19,8 @@ See here:
 
 ## CONTRIBUTORS
 1. `Georgios Ioannou`
-**[@GeorgiosIoannouCoder](https://github.com/GeorgiosIoannouCoder)**
+* **[@GeorgiosIoannouCoder](https://github.com/GeorgiosIoannouCoder)**
 2. `Hussam Marzooq` 
-**[@hMRZQ21](https://github.com/hMRZQ21)**
+* **[@hMRZQ21](https://github.com/hMRZQ21)**
 3. `Alex Ruan`
-**[@AlexOneUp](https://github.com/AlexOneUp)**
+* **[@AlexOneUp](https://github.com/AlexOneUp)**
