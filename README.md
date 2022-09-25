@@ -27,5 +27,5 @@ The mission for our group is to analyze audio and classify emotion of our traini
 **[@AlexOneUp](https://github.com/AlexOneUp)**
 
 ## SPECIAL MENTIONS 
-1. <p><a href=""https://www.linkedin.com/in/vijay-anadan/>Vijay Anandan</a> who helped coordinate with the ideation and guidance in the project.</p>
+1. <p><a href="https://www.linkedin.com/in/vijay-anadan">Vijay Anandan</a> who helped coordinate with the ideation and guidance in the project.</p>
 </br>
