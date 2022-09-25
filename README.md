@@ -18,3 +18,6 @@ See here:
 
 
 ## CONTRIBUTORS
+* **[@GeorgiosIoannouCoder](https://github.com/GeorgiosIoannouCoder)**
+* **[@hMRZQ21](https://github.com/hMRZQ21)**
+* **[@AlexOneUp](https://github.com/AlexOneUp)**
