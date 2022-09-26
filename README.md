@@ -1,5 +1,5 @@
 <h1  align="center" > CUNY TECH PREP :</h1>
-<h3> align="center"> Voice Audio Emotion Recognition</h3>
+<h3 align="center"> Voice Audio Emotion Recognition</h3>
 
 ## Introduction
 <img alt="Wave Format Audio" src="https://miro.medium.com/max/640/1*s4VsyAL7GkQ0zIjEKcDQyg.jpeg" width="600" height="600">
