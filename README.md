@@ -16,7 +16,10 @@ The mission for our group is to analyze audio and classify emotion of our traini
 
 1. `Kaggle`
 2. `Tensorflow`
-3. `Jupyter Notebook`
+3. `Pandas`
+4. `Numpy`
+5. `Seaborns`
+
 
 
 ## CONTRIBUTORS
