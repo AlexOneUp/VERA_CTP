@@ -3,7 +3,7 @@
 </div>
 
 ## Introduction
-<img alt="Wave Format Audio" src="https://t4.ftcdn.net/jpg/03/27/36/95/360_F_327369570_CAxxxHHLvjk6IJ3wGi1kuW6WTtqjaMpc.jpg" width="600" height="600">
+<img alt="Wave Format Audio" src="https://t4.ftcdn.net/jpg/03/27/36/95/360_F_327369570_CAxxxHHLvjk6IJ3wGi1kuW6WTtqjaMpc.jpg" width="600" height="300">
 
 The mission for our group is to analyze audio and classify emotion of our training data.
 
