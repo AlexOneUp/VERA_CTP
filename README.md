@@ -1,8 +1,9 @@
 <div>
-<h1  align="center" >Voice Audio Emotion Recognition</h1>
+    <h1  align="center" >Voice Audio Emotion Recognition</h1>
 </div>
-##Introduction
-<img alt="Wave Format Audio" src="https://miro.medium.com/max/640/1*s4VsyAL7GkQ0zIjEKcDQyg.jpeg" width="600" height="600">
+
+## Introduction
+<img alt="Wave Format Audio" src="https://t4.ftcdn.net/jpg/03/27/36/95/360_F_327369570_CAxxxHHLvjk6IJ3wGi1kuW6WTtqjaMpc.jpg" width="600" height="600">
 
 The mission for our group is to analyze audio and classify emotion of our training data.
 
@@ -18,9 +19,7 @@ The mission for our group is to analyze audio and classify emotion of our traini
 2. `Tensorflow`
 3. `Pandas`
 4. `Numpy`
-5. `Seaborns`
-
-
+5. `Seaborn`
 
 ## CONTRIBUTORS
 1. `Georgios Ioannou : `
