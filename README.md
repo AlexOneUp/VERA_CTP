@@ -1,5 +1,5 @@
 <div>
-    <h1  align="center" >Voice Audio Emotion Recognition</h1>
+    <h1  align="center" >Voice Audio Emotion Recognition 🔊</h1>
 </div>
 
 ## Introduction
@@ -38,7 +38,8 @@ The mission for our group is to analyze audio and classify emotion of our traini
 
 1. [Vijay Anandan](https://www.linkedin.com/in/vijay-anadan) who helped coordinate with the ideation and guidance in the project.
 
-## CODE LICENSE 
+## CODE LICENSE
+
 MIT License
 
 Copyright (c) 2022 Georgios Ioannou, Hussam Marzooq, Alex Ruan
