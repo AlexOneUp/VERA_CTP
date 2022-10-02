@@ -1,5 +1,5 @@
 <div>
-    <h1  align="center" >Voice Audio Emotion Recognition 🔊</h1>
+    <h1  align="center" >Voice Emotion Recognition of Audio🔊</h1>
 </div>
 
 ## Introduction
