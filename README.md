@@ -27,11 +27,11 @@ The mission for our group is to analyze audio and classify emotion of our traini
 
 ## CONTRIBUTORS
 
-1. `Georgios Ioannou : `
+1. `Georgios Ioannou`:
    **[@GeorgiosIoannouCoder](https://github.com/GeorgiosIoannouCoder)**
-2. `Hussam Marzooq : `
+2. `Hussam Marzooq`:
    **[@hMRZQ21](https://github.com/hMRZQ21)**
-3. `Alex Ruan : `
+3. `Alex Ruan`:
    **[@AlexOneUp](https://github.com/AlexOneUp)**
 
 ## SPECIAL MENTIONS
