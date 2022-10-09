@@ -1,0 +1,13 @@
+Instructions to get started:
+We will be using python 3.8.3
+
+1. Setup your virtual env:
+python -m venv env
+
+2. Activate virtual env (double check for your OS)
+Make sure to do this in the project directory:
+windows: /env/scripts/Activate 
+mac: source env/bin/activate
+
+3. Install required dependencies (after activating the venv)
+pip install -r requirements.txt
