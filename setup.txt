@@ -2,7 +2,7 @@ Instructions to get started:
 We will be using python 3.10.1
 
 1. Setup your pyenv:
-    python -m venv env
+    python -m venv VERA-venv
 
 2. Activate virtual env (double check for your OS)
     MacOS: source .VERA-venv/bin/activate
