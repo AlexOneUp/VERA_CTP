@@ -4,23 +4,29 @@ Instructions to setup your virtual environment using pyenv on macOS:
     Documentation found at: https://brew.sh/
 
 2. Install PyEnv:
+    xcode-select --install
+    brew install openssl readline sqlite3 xz zlib
+    brew update
     brew install pyenv
 
-3. Install Python Version 3.10.1:
+3. Add the pyenv to your $PATH (if you are not using zsh as a shell, you have to change ~/.zshrc accordingly):
+    echo 'eval "$(pyenv init --path)"' >> ~/.zshrc
+
+4. Install Python Version 3.10.1:
     pyenv install 3.10.1
 
-4. Clone this repository.
+5. Clone this repository.
 
-5. Navigate to the cloned repository folder.
+6. Navigate to the cloned repository folder.
 
-6. Use the installed Python version in the cloned repository folder:
+7. Use the installed Python version in the cloned repository folder:
     pyenv local 3.10.1
 
-7. Create virtual environment in the cloned repository folder:
+8. Create virtual environment in the cloned repository folder:
     python -m venv .VERA-venv
 
-8. Activate the virtual environment:
+9. Activate the virtual environment:
     source .VERA-venv/bin/activate
 
-9. Install the dependencies listed in the requirements.txt file:
+10. Install the dependencies listed in the requirements.txt file:
     pip install -r requirements.txt
