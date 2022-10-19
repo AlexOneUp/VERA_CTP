@@ -35,19 +35,11 @@ The mission for our group is to analyze audio and classify emotion of our traini
 ## TECHNOLOGIES (TBD)
 
 1. [Kaggle](https://www.kaggle.com/)
-2. [Tensorflow](https://www.tensorflow.org/)
-3. [Pandas](https://pandas.pydata.org/)
-4. [Numpy](https://numpy.org/)
-5. [Seaborn](https://seaborn.pydata.org/)
-
-## CONTRIBUTORS
-
-1. `Georgios Ioannou`
-   **[@GeorgiosIoannouCoder](https://github.com/GeorgiosIoannouCoder)**
-2. `Hussam Marzooq`
-   **[@hMRZQ21](https://github.com/hMRZQ21)**
-3. `Alex Ruan`
-   **[@AlexOneUp](https://github.com/AlexOneUp)**
+2. [Librosa](https://librosa.org)
+3. [Tensorflow](https://www.tensorflow.org/)
+4. [Pandas](https://pandas.pydata.org/)
+5. [Numpy](https://numpy.org/)
+6. [Seaborn](https://seaborn.pydata.org/)
 
 ## SPECIAL MENTIONS
 

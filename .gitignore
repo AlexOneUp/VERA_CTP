@@ -1,3 +1,7 @@
-/Datasets
-.env
-/env
+/Pipfiles
+.VERA-venv
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+.python-version
+.DS_Store
+.DS_Store?
