@@ -1,0 +1,21 @@
+Instructions to setup your virtual environment using pyenv on macOS:
+
+1. Create a new directory for the project.
+
+2. Install PyEnv:
+    brew install pyenv
+
+3. Install Python Version 3.10.1:
+    pyenv install 3.10.1
+
+4. Use the Installed Python Version in the new directory that was created in Step 1:
+    pyenv local 3.10.1
+
+5. Create Virtual Environment in the new directory that was created in Step 1:
+    python -m venv .VERA-venv
+
+6. Activate the Virtual Environment in the new directory that was created in Step 1:
+    source .VERA-venv/bin/activate
+
+7. Install dependencies listed in the requirements.txt file:
+    pip install -r requirements.txt
