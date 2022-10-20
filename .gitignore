@@ -1,8 +1,14 @@
-/Pipfiles
+# Environments
 .VERA-venv
+.env
+
+# Jupyer Notebook
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
+
+# pyenv
 .python-version
+
+# Apple Desktop Services Store
 .DS_Store
 .DS_Store?
-.env
