@@ -2,7 +2,7 @@
 .VERA-venv
 .env
 
-# Jupyer Notebook
+# Jupyter Notebook
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 
