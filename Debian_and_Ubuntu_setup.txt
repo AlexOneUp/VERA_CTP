@@ -1,12 +1,12 @@
 Instructions to setup your virtual environment using pyenv on Debian/Ubuntu:
 
-1. Install necessary changes with this command:
+1. Install the necessary changes with this command:
     sudo apt install -y make build-essential libssl-dev zlib1g-dev \
     libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
     libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl \
     git
 
-2. Install PyEnv:
+2. Install pyenv:
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 
 3. Add the pyenv to your $PATH (if you use a different shell than bash you have to change ~/.bashrc accordingly):
