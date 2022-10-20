@@ -3,7 +3,7 @@ Instructions to setup your virtual environment using pyenv on macOS:
 1. Install Homebrew:
     Documentation found at: https://brew.sh/
 
-2. Install PyEnv:
+2. Install pyenv:
     xcode-select --install
     brew install openssl readline sqlite3 xz zlib
     brew update
