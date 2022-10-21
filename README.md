@@ -8,7 +8,7 @@
 <img alt="Wave Format Audio" src="https://t4.ftcdn.net/jpg/03/27/36/95/360_F_327369570_CAxxxHHLvjk6IJ3wGi1kuW6WTtqjaMpc.jpg" width="600" height="300"/>
 </p>
 
-An audio classification project which takes audio files recorded from human speech, primarily in .wav format, and predicts the emotion conveyed from the voices. 
+An audio classification project which takes audio files recorded from human speech, primarily in .wav format, and predicts the emotion conveyed from the voices.
 
 ## DATASETS USED
 
@@ -36,10 +36,10 @@ An audio classification project which takes audio files recorded from human spee
 
 1. [Kaggle](https://www.kaggle.com/)
 2. [Librosa](https://librosa.org)
-3. [Tensorflow](https://www.tensorflow.org/)
+3. [Numpy](https://numpy.org/)
 4. [Pandas](https://pandas.pydata.org/)
-5. [Numpy](https://numpy.org/)
-6. [Seaborn](https://seaborn.pydata.org/)
+5. [Seaborn](https://seaborn.pydata.org/)
+6. [Tensorflow](https://www.tensorflow.org/)
 
 ## SPECIAL MENTIONS
 
