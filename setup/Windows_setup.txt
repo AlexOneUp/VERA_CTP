@@ -33,10 +33,24 @@ Instructions to setup your virtual environment using pyenv on Microsoft Windows:
     pyenv local 3.10.1
 
 6. Create virtual environment in the cloned repository folder:
-    python -m venv .VERA-venv
+    python -m venv .vera-venv
 
 7. Activate the virtual environment:
-    .\.VERA-venv\Scripts\activate
+    .\.vera-venv\Scripts\activate
 
 8. Install the dependencies listed in the requirements.txt file:
     pip install -r requirements.txt
+
+9. Install ipykernel:
+    pip install ipykernel
+
+10. Install Jupyter Notebook:
+    pip install jupyter notebook
+
+11. Add the kernel of the virtual environment in the Jupyter Notebook:
+    ipython kernel install --user --name=.vera-venv
+
+12. Run the Jupyter Notebook:
+    jupyter notebook
+
+13. Select the .vera-venv kernel to run the Jupyter Notebook.
