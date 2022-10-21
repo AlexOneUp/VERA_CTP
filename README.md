@@ -10,6 +10,12 @@
 
 An audio classification project which takes audio files recorded from human speech, primarily in .wav format, and predicts the emotion conveyed from the voices.
 
+## VIRTUAL ENVIRONMENT SETUP
+
+1. **macOS** users look in the setup\macOS_setup.txt
+2. **Windows** users look in the setup\Windows_setup.txt
+3. **Debian&Ubuntu** users look in the setup\Debian_and_Ubuntu_setup.txt
+
 ## DATASETS USED
 
 1. [RAVDESS Emotional Speech Dataset on Kaggle](https://www.kaggle.com/uwrfkaggler/ravdess-emotional-speech-audio)
