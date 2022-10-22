@@ -12,9 +12,9 @@ An audio classification project which takes audio files recorded from human spee
 
 ## VIRTUAL ENVIRONMENT SETUP
 
-1. **macOS** users look in the [VERA_CTP/setup/macOS_setup.txt](https://github.com/AlexOneUp/VERA_CTP/blob/main/setup/macOS_setup.txt)
+1. **MacOS** users look in the [VERA_CTP/setup/macOS_setup.txt](https://github.com/AlexOneUp/VERA_CTP/blob/main/setup/macOS_setup.txt)
 2. **Windows** users look in the [VERA_CTP/setup/Windows_setup.txt](https://github.com/AlexOneUp/VERA_CTP/blob/main/setup/Windows_setup.txt)
-3. **Debian&Ubuntu** users look in the [VERA_CTP/setup/Debian_and_Ubuntu_setup.txt](https://github.com/AlexOneUp/VERA_CTP/blob/main/setup/Debian_and_Ubuntu_setup.txt)
+3. **Debian & Ubuntu** users look in the [VERA_CTP/setup/Debian_and_Ubuntu_setup.txt](https://github.com/AlexOneUp/VERA_CTP/blob/main/setup/Debian_and_Ubuntu_setup.txt)
 
 ## DATASETS USED
 
