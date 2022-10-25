@@ -11,7 +11,8 @@
 An audio classification project which takes audio files recorded from human speech, primarily in .wav format, and predicts the emotion conveyed from the voices.
 
 ## VIRTUAL ENVIRONMENT SETUP
-***NOTE: Highly recommended to use Kaggle/Google Colab to run the provided .ipynb file because the model requires a GPU for fast processing and thus reducing execution time of the file.***
+
+**_NOTE: Highly recommended to use Kaggle/Google Colab to run the provided .ipynb file because the model requires a GPU for fast processing and thus reducing execution time of the .ipynb file. If you want to run the .ipynb file locally, then the instructions are below._**
 
 1. **MacOS** users look in the [VERA_CTP/setup/macOS_setup.txt](https://github.com/AlexOneUp/VERA_CTP/blob/main/setup/macOS_setup.txt)
 2. **Windows** users look in the [VERA_CTP/setup/Windows_setup.txt](https://github.com/AlexOneUp/VERA_CTP/blob/main/setup/Windows_setup.txt)
