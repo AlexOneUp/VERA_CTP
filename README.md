@@ -40,14 +40,15 @@ An audio classification project which takes audio files recorded from human spee
 
    The dataset is organised such that each of the two female actor and their emotions are contain within its own folder. And within that, all 200 target words audio file can be found. The format of the audio file is a WAV format</p>
 
-## TECHNOLOGIES (TBD)
+## TECHNOLOGIES
 
 1. [Kaggle](https://www.kaggle.com/)
 2. [Librosa](https://librosa.org)
 3. [Numpy](https://numpy.org/)
 4. [Pandas](https://pandas.pydata.org/)
 5. [Seaborn](https://seaborn.pydata.org/)
-6. [Tensorflow](https://www.tensorflow.org/)
+6. [Tensorflow/Keras](https://www.tensorflow.org/)
+7. [Scikit-Learn](https://scikit-learn.org/stable/)
 
 ## SPECIAL MENTIONS
 
