@@ -4,6 +4,9 @@ import time
 import sounddevice as sd
 from scipy.io.wavfile import write
 
+
+
+
 # for user readings
 prompts = ["Kids are talking by the door", "Dogs are sitting by the door",
 "It's eleven o'clock", "That is exactly what happened", "I'm on my way to the meeting",
@@ -21,37 +24,42 @@ subheader = "We'll randomly choose a prompt for you to read:"
 st.subheader(subheader)
 time.sleep(0.5)
 st.write('"' + random.choice(prompts) + '"')
-# 'Our Current Progress...'
-
-# # Add a placeholder
-# latest_iteration = st.empty()
-# bar = st.progress(0)
-
-# for i in range(100):
-#   if i == 10: break 
-#   bar.progress(i + 1) # Update the progress bar with each iteration.
-#   time.sleep(0.05)
-
-# st.write('We\'re ', i,'% done!')
 
 if st.button('Record'): # record audio 
   fs = 44100  # Sample rate
   seconds = 3  # Duration of recording
   
   with st.spinner(f'Recording for {seconds} seconds ....'):
+    # Recording with sounddevice lib 
     myrecording = sd.rec(int(seconds * fs), samplerate=fs, channels=1)
     sd.wait()  # Wait until recording is finished
     
-    write('frontend/soundfiles/recording.wav', fs, myrecording)  # Save as WAV file 
+    write('soundfiles/recording.wav', fs, myrecording)  # Save as WAV file 
     st.success("Recording completed")
+
 
 if st.button('Play'): # play the recorded audio
   try:
-    audio_file = open('frontend/soundfiles/recording.wav', 'rb')
+    audio_file = open('soundfiles/recording.wav', 'rb')
     audio_bytes = audio_file.read()
     st.audio(audio_bytes)
 
   except: st.write("Please record sound first")
+
+# Skeleton on Predicted Value of the audio. 
+def state_emotion():
+  
+  # In the case of persistent emotion data from a previous session:
+  try:
+    st.write("Are you still", st.session_state.emotion, "?")
+  
+# Prompt 'Yes' or 'No' buttons
+  # Then let's you predict again
+
+# Show the Predict Emotion first.
+  except:
+    play = st.button('Predict Emotion', key='emotion', on_click=state_emotion)
+
 
 repo = 'Check out our full repository [here!](https://github.com/AlexOneUp/VERA_CTP)'
 st.markdown(repo)
