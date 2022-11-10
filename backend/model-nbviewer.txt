@@ -1,1 +1,0 @@
-https://nbviewer.org/github/AlexOneUp/VERA_CTP/blob/main/backend/vera.ipynb
