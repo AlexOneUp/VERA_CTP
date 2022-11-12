@@ -1,17 +1,19 @@
-import pandas as pd
-import numpy as np
 import librosa
+import numpy as np
+import pandas as pd
 
 from keras.utils import np_utils 
 from sklearn.model_selection import train_test_split 
-from tensorflow.keras.models import load_model
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from statistics import mode 
+from tensorflow.keras.models import load_model
+
+# List of Emotions the Model was Trained on.
+emotions_classes = sorted(['surprise','neutral','disgust','fear','sad','calm','happy','angry'])
 
 absolute_path1 = ""
 
-model_path = absolute_path1 + 'model.h5'
-model = load_model(model_path)
+model = load_model(absolute_path1 + 'model.h5')
 
 # We have X which are the numbers (data augmentation + data extraction)
 X = pd.read_parquet(absolute_path1 + 'X.parquet')
@@ -58,7 +60,7 @@ def pitching(data, sampling_rate, pitch_factor = 0.7,random = False):
 def streching(data,rate = 0.8):
     return librosa.effects.time_stretch(data, rate)
 
-# data extraction
+# Data extraction
 def zero_crossing_rate(data,frame_length, hop_length):
     zcr = librosa.feature.zero_crossing_rate(y = data, frame_length = frame_length, hop_length = hop_length)
     return np.squeeze(zcr)
@@ -71,7 +73,7 @@ def mel_frequency_cepstral_coefficients(data, sampling_rate, frame_length = 2048
     mfcc = librosa.feature.mfcc(y = data,sr = sampling_rate)
     return np.squeeze(mfcc.T) if not flatten else np.ravel(mfcc.T)
 
-# combined data extraction
+# Combined data extraction
 def feature_extraction(data, sampling_rate, frame_length = 2048, hop_length = 512):
     result = np.array([])
     
@@ -84,6 +86,7 @@ def feature_extraction(data, sampling_rate, frame_length = 2048, hop_length = 51
 
 #  Duration and offset act as placeholders because there is no audio in start and the ending of
 #  each audio file is noramlly below three seconds.
+# Combined data augmentation and data extraction.
 def get_features(file_path, duration = 2.5, offset = 0.6):
     data, sampling_rate = librosa.load(file_path, duration = duration, offset = offset)
     
@@ -121,9 +124,6 @@ def increase_ndarray_size(features_test):
     features_test = tmp
     features_test = np.delete(features_test, 0, axis=1)
     return features_test
-
-# List of Emotions the Model was Trained on. Class Balances Can be Seen in the other Notebook.
-emotions_classes = sorted(['surprise','neutral','disgust','fear','sad','calm','happy','angry'])
 
 # Make the prediction.
 def predict(features_test):
