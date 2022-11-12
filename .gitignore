@@ -15,3 +15,6 @@
 
 # Datasets
 Datasets/
+
+# python cache files
+**__pycache__

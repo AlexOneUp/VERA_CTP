@@ -5,7 +5,7 @@ import sounddevice as sd
 from scipy.io.wavfile import write
 import sys
 
-# NOTE: use absolute paths 
+# NOTE: use absolute path 
 absolute_path = ""
 sys.path.insert(0, absolute_path + 'backend')
 from audio_processing import *

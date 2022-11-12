@@ -9,24 +9,19 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 from statistics import mode 
 
 absolute_path1 = ""
-# loading model (using absolute paths)
+
 model_path = absolute_path1 + 'model.h5'
 model = load_model(model_path)
 
-# File path to .csv.
-csv_path = absolute_path1 + 'audio_features.csv'
-
-# Read the csv.
-audio_features_df = pd.read_csv(csv_path)
-
-# We have X which are the numbers (data augmentation + data extraction). Just drop emontion, gener, and location.
-X = audio_features_df.drop(labels = ['emotion', 'gender', 'location'], axis = 1)
+# We have X which are the numbers (data augmentation + data extraction)
+X = pd.read_parquet(absolute_path1 + 'X.parquet')
 
 # We try to predict y which is the emotion.
-y = audio_features_df['emotion']
+y = pd.read_parquet(absolute_path1 + 'y.parquet')
 
 # Convert class vector (integers) to binary class matrix.
-label=LabelEncoder()
+label=LabelEncoder() 
+y = y.squeeze()
 y = np_utils.to_categorical(label.fit_transform(y))
 
 # test_train_split
