@@ -1,22 +1,23 @@
-import streamlit as st
 import random
-import time
 import sounddevice as sd
-from scipy.io.wavfile import write
+import streamlit as st
 import sys
+import time
+
+from scipy.io.wavfile import write
 
 # NOTE: use absolute path 
 absolute_path = ""
 sys.path.insert(0, absolute_path + 'backend')
 from audio_processing import *
 
-# for user readings
+# For user readings
 prompts = ["Kids are talking by the door", "Dogs are sitting by the door",
 "It's eleven o'clock", "That is exactly what happened", "I'm on my way to the meeting",
 "I wonder what this is about", "The airplane is almost full", "Maybe tomorrow it will be cold",
 "I think I have a doctor's appointment", "Say the word apple"]
 
-# title
+# Title
 st.write("# Voice Emotion Recognition on Audio")
 
 image = "https://t4.ftcdn.net/jpg/03/27/36/95/360_F_327369570_CAxxxHHLvjk6IJ3wGi1kuW6WTtqjaMpc.jpg"
@@ -28,28 +29,28 @@ st.subheader(subheader)
 st.write('"' + random.choice(prompts) + '"')
 
 # UI design
-if st.button('Record'): # record audio 
+if st.button('Record'): # Record audio 
   fs = 44100  # Sample rate
-  seconds = 3  # Duration of recording
+  seconds = 3 # Duration of recording
   
   with st.spinner(f'Recording for {seconds} seconds ....'):
     # Recording with sounddevice lib 
     myrecording = sd.rec(int(seconds * fs), samplerate=fs, channels=1)
-    sd.wait()  # Wait until recording is finished
+    sd.wait() # Wait until recording is finished
     
-    write(absolute_path + 'frontend/soundfiles/recording.wav', fs, myrecording)  # Save as WAV file 
+    write(absolute_path + 'frontend/soundfiles/recording.wav', fs, myrecording) # Save as WAV file 
     st.success("Recording completed")
 
-if st.button('Play'): # play the recorded audio
+if st.button('Play'): # Play the recorded audio
   try:
-    #loads audio file
+    # Loads audio file
     audio_file = open(absolute_path + 'frontend/soundfiles/recording.wav', 'rb')
     audio_bytes = audio_file.read()
     st.audio(audio_bytes) 
 
   except: st.write("Please record sound first")
 
-if st.button('Classify'): # connection with model
+if st.button('Classify'): # Connection with model
   try: 
     audio_features = get_features(absolute_path + 'frontend/soundfiles/recording.wav')
     
