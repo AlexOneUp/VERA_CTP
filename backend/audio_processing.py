@@ -1,25 +1,33 @@
 import librosa
 import numpy as np
+import os
 import pandas as pd
 
+from dotenv import load_dotenv
 from keras.utils import np_utils 
+from pathlib import Path
 from sklearn.model_selection import train_test_split 
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from statistics import mode 
 from tensorflow.keras.models import load_model
 
+
+load_dotenv()
+
+model_path = os.getenv('model_path')
+X_path = os.getenv('X_path')
+y_path = os.getenv('y_path')
+
 # List of Emotions the Model was Trained on.
 emotions_classes = sorted(['surprise','neutral','disgust','fear','sad','calm','happy','angry'])
 
-absolute_path1 = "/Users/hussam/Desktop/VERA stuff/"
-
-model = load_model(absolute_path1 + 'model.h5')
+model = load_model(model_path)
 
 # We have X which are the numbers (data augmentation + data extraction)
-X = pd.read_parquet(absolute_path1 + 'X.parquet')
+X = pd.read_parquet(X_path)
 
 # We try to predict y which is the emotion.
-y = pd.read_parquet(absolute_path1 + 'y.parquet')
+y = pd.read_parquet(y_path)
 
 # Convert class vector (integers) to binary class matrix.
 label=LabelEncoder() 
@@ -34,9 +42,9 @@ X_valid, X_test, y_valid, y_test = train_test_split(X_remain, y_remain, test_siz
 # Standardize features by removing the mean and scaling to unit variance.
 # z = (x - u) / s
 standard_scaler = StandardScaler ()
-X_train = standard_scaler.fit_transform(X_train)
-X_valid = standard_scaler.transform(X_valid)
-X_test = standard_scaler.transform(X_test)
+X_train = standard_scaler.fit_transform(X_train.values)
+X_valid = standard_scaler.transform(X_valid.values)
+X_test = standard_scaler.transform(X_test.values)
 
 # Noise Injection
 def inject_noise(data, random = False, rate = 0.035, threshold = 0.075):
@@ -45,33 +53,41 @@ def inject_noise(data, random = False, rate = 0.035, threshold = 0.075):
     augmented_data = data + noise_amplitude * np.random.normal(size = data.shape[0])
     return augmented_data
 
+
 # Shifting
 def shifting(data, rate = 1000):
     shift_range = int(np.random.uniform(low = -5, high = 5) * rate)
     shift_range = np.roll(data, shift_range)
     return shift_range
 
+
 # Pitching
 def pitching(data, sampling_rate, pitch_factor = 0.7,random = False):
     if random: pitch_factor= np.random.random() * pitch_factor
-    return librosa.effects.pitch_shift(data, sampling_rate, pitch_factor)
+    return librosa.effects.pitch_shift(y = data, sr = sampling_rate, n_steps = pitch_factor)
+
+
 
 # Stretching
 def streching(data,rate = 0.8):
-    return librosa.effects.time_stretch(data, rate)
+    return librosa.effects.time_stretch(y = data, r =rate)
+
 
 # Data extraction
 def zero_crossing_rate(data,frame_length, hop_length):
     zcr = librosa.feature.zero_crossing_rate(y = data, frame_length = frame_length, hop_length = hop_length)
     return np.squeeze(zcr)
 
+
 def root_mean_square(data, frame_length = 2048, hop_length = 512):
     rms = librosa.feature.rms(y = data, frame_length = frame_length, hop_length = hop_length)
     return np.squeeze(rms)
 
+
 def mel_frequency_cepstral_coefficients(data, sampling_rate, frame_length = 2048, hop_length = 512, flatten:bool = True):
     mfcc = librosa.feature.mfcc(y = data,sr = sampling_rate)
     return np.squeeze(mfcc.T) if not flatten else np.ravel(mfcc.T)
+
 
 # Combined data extraction
 def feature_extraction(data, sampling_rate, frame_length = 2048, hop_length = 512):
@@ -83,6 +99,7 @@ def feature_extraction(data, sampling_rate, frame_length = 2048, hop_length = 51
         mel_frequency_cepstral_coefficients(data, sampling_rate, frame_length, hop_length)
     ))
     return result
+
 
 #  Duration and offset act as placeholders because there is no audio in start and the ending of
 #  each audio file is noramlly below three seconds.
@@ -114,32 +131,35 @@ def get_features(file_path, duration = 2.5, offset = 0.6):
     
     return audio_features
 
+
 # Increase ndarray dimensions to [4,2376].
 def increase_ndarray_size(features_test):
     tmp = np.zeros([4, 2377])
     offsets = [0, 1]
-    insert_here = [slice(offsets[dim], offsets[dim] + features_test.shape[dim]) for dim in range(features_test.ndim)]
+    insert_here = tuple([slice(offsets[dim], offsets[dim] + features_test.shape[dim]) for dim in range(features_test.ndim)])
     tmp[insert_here] = features_test
     features_test = tmp
     features_test = np.delete(features_test, 0, axis=1)
     return features_test
 
-# Make the prediction.
-def predict(features_test):
-    features_test = standard_scaler.transform(features_test)
-    features_test = np.expand_dims(features_test, axis = 2)
 
-    y_pred = model.predict(features_test)
-    # print('Probabilities for each and every emotion for each and every feature extraction.\n\n',y_pred)
-    y_pred = np.argmax(y_pred, axis = 1)
-    # print('\nPredicted emotion for each and every feature extraction.\n\n', y_pred)
-    # print('\nemotions_classes = ', emotions_classes)
-    
-    # try: print('\nModel predicted emotion: ', emotions_classes[mode(y_pred)])
-    # except: print('\nModel unalbe to find mode base on these emotion predictions: ', y_pred)
-    return emotions_classes[mode(y_pred)]
-
-def increase_arr_size(audio_features):
+def increase_array_size(audio_features):
     if audio_features.shape[1] < 2376:
       audio_features = increase_ndarray_size(audio_features)
     return audio_features
+
+
+# Make the prediction.
+def predict(audio_features):
+    audio_features = standard_scaler.transform(audio_features)
+    audio_features = np.expand_dims(audio_features, axis = 2)
+    y_pred = model.predict(audio_features)
+    y_pred = np.argmax(y_pred, axis = 1)
+    
+    try:
+        print('\nPredicted emotion for each and every feature extraction.\n\n', y_pred)
+        print('\nAvailable emotions_classes = ', emotions_classes)
+        print('\nModel predicted emotion: ', emotions_classes[mode(y_pred)])
+        return emotions_classes[mode(y_pred)]
+    except:
+        print('\nModel unable to find mode based on these emotion predictions: ', y_pred)
