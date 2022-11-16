@@ -7,7 +7,7 @@ import time
 from scipy.io.wavfile import write
 
 # NOTE: use absolute path 
-absolute_path = ""
+absolute_path = "/Users/hussam/Desktop/Projects/VERA_CTP/"
 sys.path.insert(0, absolute_path + 'backend')
 from audio_processing import *
 
@@ -51,14 +51,13 @@ if st.button('Play'): # Play the recorded audio
   except: st.write("Please record sound first")
 
 if st.button('Classify'): # Connection with model
-  try: 
+  # try: 
     audio_features = get_features(absolute_path + 'frontend/soundfiles/recording.wav')
+    audio_features = increase_arr_size(audio_features)
     
-    if audio_features.shape[1] < 2376:
-      audio_features = increase_ndarray_size(audio_features)
-
-    predict(audio_features)
-  except: st.write("Something went wrong.")
+    classification = predict(audio_features)
+    st.write(classification)
+  # except: st.write("Something went wrong.")
 
 # Skeleton on Predicted Value of the audio. 
 # def state_emotion():

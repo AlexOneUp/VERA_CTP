@@ -11,7 +11,7 @@ from tensorflow.keras.models import load_model
 # List of Emotions the Model was Trained on.
 emotions_classes = sorted(['surprise','neutral','disgust','fear','sad','calm','happy','angry'])
 
-absolute_path1 = ""
+absolute_path1 = "/Users/hussam/Desktop/VERA stuff/"
 
 model = load_model(absolute_path1 + 'model.h5')
 
@@ -119,7 +119,6 @@ def increase_ndarray_size(features_test):
     tmp = np.zeros([4, 2377])
     offsets = [0, 1]
     insert_here = [slice(offsets[dim], offsets[dim] + features_test.shape[dim]) for dim in range(features_test.ndim)]
-    
     tmp[insert_here] = features_test
     features_test = tmp
     features_test = np.delete(features_test, 0, axis=1)
@@ -131,11 +130,16 @@ def predict(features_test):
     features_test = np.expand_dims(features_test, axis = 2)
 
     y_pred = model.predict(features_test)
-    print('Probabilities for each and every emotion for each and every feature extraction.\n\n',y_pred)
+    # print('Probabilities for each and every emotion for each and every feature extraction.\n\n',y_pred)
     y_pred = np.argmax(y_pred, axis = 1)
-    print('\nPredicted emotion for each and every feature extraction.\n\n', y_pred)
-    print('\nemotions_classes = ', emotions_classes)
+    # print('\nPredicted emotion for each and every feature extraction.\n\n', y_pred)
+    # print('\nemotions_classes = ', emotions_classes)
     
-    try: print('\nModel predicted emotion: ', emotions_classes[mode(y_pred)])
-    except: print('\nModel unalbe to find mode base on these emotion predictions: ', y_pred)
-    print('************************************************')
+    # try: print('\nModel predicted emotion: ', emotions_classes[mode(y_pred)])
+    # except: print('\nModel unalbe to find mode base on these emotion predictions: ', y_pred)
+    return emotions_classes[mode(y_pred)]
+
+def increase_arr_size(audio_features):
+    if audio_features.shape[1] < 2376:
+      audio_features = increase_ndarray_size(audio_features)
+    return audio_features
