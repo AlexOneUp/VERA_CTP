@@ -8,15 +8,7 @@
 <img alt="Wave Format Audio" src="https://t4.ftcdn.net/jpg/03/27/36/95/360_F_327369570_CAxxxHHLvjk6IJ3wGi1kuW6WTtqjaMpc.jpg" width="600" height="300"/>
 </p>
 
-An audio classification project which takes audio files recorded from human speech, primarily in .wav format, and predicts the emotion conveyed from the voices.
-
-## VIRTUAL ENVIRONMENT SETUP
-
-**_NOTE: Highly recommended to use Kaggle/Google Colab to run the provided .ipynb file because the model requires a GPU for fast processing and thus reducing execution time of the .ipynb file. If you want to run the .ipynb file locally, then the instructions are below._**
-
-1. **MacOS** users look in [setup/macOS_setup.txt](https://github.com/AlexOneUp/VERA_CTP/blob/main/setup/macOS_setup.txt)
-2. **Windows** users look in [setup/Windows_setup.txt](https://github.com/AlexOneUp/VERA_CTP/blob/main/setup/Windows_setup.txt)
-3. **Debian & Ubuntu** users look in [setup/Debian_and_Ubuntu_setup.txt](https://github.com/AlexOneUp/VERA_CTP/blob/main/setup/Debian_and_Ubuntu_setup.txt)
+An audio classification project which takes audio files recorded from human speech, primarily in .wav format, and predicts the emotion conveyed from the voice.
 
 ## DATASETS USED
 
@@ -38,24 +30,39 @@ An audio classification project which takes audio files recorded from human spee
    <br>
    <p>There are a set of 200 target words were spoken in the carrier phrase "Say the word _' by two actresses (aged 26 and 64 years) and recordings were made of the set portraying each of seven emotions (anger, disgust, fear, happiness, pleasant surprise, sadness, and neutral). There are 2800 data points (audio files) in total.<br>
 
-   The dataset is organised such that each of the two female actor and their emotions are contain within its own folder. And within that, all 200 target words audio file can be found. The format of the audio file is a WAV format</p>
+   The dataset is organized such that each of the two female actor and their emotions are contain within its own folder. And within that, all 200 target words audio file can be found. The format of the audio file is a WAV format</p>
 
 ## TECHNOLOGIES
 
-1. [Kaggle](https://www.kaggle.com/)
-2. [Librosa](https://librosa.org)
-3. [Numpy](https://numpy.org/)
-4. [Pandas](https://pandas.pydata.org/)
-5. [Seaborn](https://seaborn.pydata.org/)
+1. [Librosa](https://librosa.org)
+2. [Numpy](https://numpy.org/)
+3. [Pandas](https://pandas.pydata.org/)
+4. [Seaborn](https://seaborn.pydata.org/)
+5. [Plotly](https://plotly.com/)
 6. [Tensorflow/Keras](https://www.tensorflow.org/)
 7. [Scikit-Learn](https://scikit-learn.org/stable/)
+8. [Kaggle](https://www.kaggle.com/)
+9. [Streamlit](https://streamlit.io/)
 
-## NOTEBOOK VIEWER LINK 
+## NOTEBOOK VIEWER LINK
 
-See our model implementation [here!](https://nbviewer.org/github/AlexOneUp/VERA_CTP/blob/main/backend/vera-ctp.ipynb)
+See our model implementation [here](https://nbviewer.org/github/AlexOneUp/VERA_CTP/blob/main/backend/vera-ctp.ipynb)!
+
+## VIRTUAL ENVIRONMENT SETUP
+
+**_NOTE: Highly recommended to use Kaggle/Google Colab to run the provided .ipynb file because the model requires a GPU for fast processing and thus reducing execution time of the .ipynb file. If you want to run the .ipynb file locally, then the instructions are below._**
+
+1. **MacOS** users look in [setup/macOS_setup.txt](https://github.com/AlexOneUp/VERA_CTP/blob/main/setup/macOS_setup.txt)
+2. **Windows** users look in [setup/Windows_setup.txt](https://github.com/AlexOneUp/VERA_CTP/blob/main/setup/Windows_setup.txt)
+3. **Debian & Ubuntu** users look in [setup/Debian_and_Ubuntu_setup.txt](https://github.com/AlexOneUp/VERA_CTP/blob/main/setup/Debian_and_Ubuntu_setup.txt)
+
 ## SPECIAL MENTIONS
 
 1. [Vijay Anandan](https://www.linkedin.com/in/vijay-anadan) who helped coordinate with the ideation and guidance in the project.
+
+## CONTRIBUTION AND FEEDBACK
+
+If you would like to contribute or have any feedback for this project please feel free to contact one of the three members of the group.
 
 ## CODE LICENSE
 

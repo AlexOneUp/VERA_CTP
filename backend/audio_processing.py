@@ -2,6 +2,7 @@ import librosa
 import numpy as np
 import os
 import pandas as pd
+import streamlit as st
 
 from dotenv import load_dotenv
 from keras.utils import np_utils 
@@ -18,23 +19,24 @@ model_path = os.getenv('model_path')
 X_path = os.getenv('X_path')
 y_path = os.getenv('y_path')
 
-# List of Emotions the Model was Trained on.
+# List of emotions the model was trained on.
 emotions_classes = sorted(['surprise','neutral','disgust','fear','sad','calm','happy','angry'])
 
+# Load the model.
 model = load_model(model_path)
 
-# We have X which are the numbers (data augmentation + data extraction)
+# We have X which is data augmentation + data extraction.
 X = pd.read_parquet(X_path)
 
 # We try to predict y which is the emotion.
 y = pd.read_parquet(y_path)
 
 # Convert class vector (integers) to binary class matrix.
-label=LabelEncoder() 
+label = LabelEncoder() 
 y = y.squeeze()
 y = np_utils.to_categorical(label.fit_transform(y))
 
-# test_train_split
+# Split data into training, validation, and testing.
 X_train, X_remain, y_train, y_remain = train_test_split(X, y, test_size = 0.2, random_state = 42)
 X_valid, X_test, y_valid, y_test = train_test_split(X_remain, y_remain, test_size = 0.5, random_state = 42)
 
@@ -46,7 +48,7 @@ X_train = standard_scaler.fit_transform(X_train.values)
 X_valid = standard_scaler.transform(X_valid.values)
 X_test = standard_scaler.transform(X_test.values)
 
-# Noise Injection
+# Noise Injection.
 def inject_noise(data, random = False, rate = 0.035, threshold = 0.075):
     if random: rate = np.random.random() * threshold
     noise_amplitude = rate * np.random.uniform() * np.amax(data)
@@ -54,45 +56,36 @@ def inject_noise(data, random = False, rate = 0.035, threshold = 0.075):
     return augmented_data
 
 
-# Shifting
-def shifting(data, rate = 1000):
-    shift_range = int(np.random.uniform(low = -5, high = 5) * rate)
-    shift_range = np.roll(data, shift_range)
-    return shift_range
-
-
-# Pitching
+# Pitching. (Audio Data Augmentation)
 def pitching(data, sampling_rate, pitch_factor = 0.7,random = False):
     if random: pitch_factor= np.random.random() * pitch_factor
     return librosa.effects.pitch_shift(y = data, sr = sampling_rate, n_steps = pitch_factor)
 
 
-
-# Stretching
+# Stretching. (Audio Data Augmentation)
 def streching(data,rate = 0.8):
-    return librosa.effects.time_stretch(y = data, r =rate)
+    return librosa.effects.time_stretch(y = data, r = rate)
 
 
-# Data extraction
+# Zero crossing rate. (Audio Data Feature Extraction)
 def zero_crossing_rate(data,frame_length, hop_length):
     zcr = librosa.feature.zero_crossing_rate(y = data, frame_length = frame_length, hop_length = hop_length)
     return np.squeeze(zcr)
 
-
+# Root mean square. (Audio Data Feature Extraction)
 def root_mean_square(data, frame_length = 2048, hop_length = 512):
     rms = librosa.feature.rms(y = data, frame_length = frame_length, hop_length = hop_length)
     return np.squeeze(rms)
 
-
+# Mel frequency cepstral coefficients. (Audio Data Feature Extraction)
 def mel_frequency_cepstral_coefficients(data, sampling_rate, frame_length = 2048, hop_length = 512, flatten:bool = True):
     mfcc = librosa.feature.mfcc(y = data,sr = sampling_rate)
     return np.squeeze(mfcc.T) if not flatten else np.ravel(mfcc.T)
 
 
-# Combined data extraction
+# Combined audio data feature extraction.
 def feature_extraction(data, sampling_rate, frame_length = 2048, hop_length = 512):
     result = np.array([])
-    
     result = np.hstack((result,
         zero_crossing_rate(data, frame_length, hop_length),
         root_mean_square(data, frame_length, hop_length),
@@ -102,8 +95,8 @@ def feature_extraction(data, sampling_rate, frame_length = 2048, hop_length = 51
 
 
 #  Duration and offset act as placeholders because there is no audio in start and the ending of
-#  each audio file is noramlly below three seconds.
-# Combined data augmentation and data extraction.
+#  each audio file is normally below three seconds.
+# Combine audio data augmentation and audio data feature extraction.
 def get_features(file_path, duration = 2.5, offset = 0.6):
     data, sampling_rate = librosa.load(file_path, duration = duration, offset = offset)
     
@@ -143,6 +136,7 @@ def increase_ndarray_size(features_test):
     return features_test
 
 
+# Determine if ndarray needs to be increase in size.
 def increase_array_size(audio_features):
     if audio_features.shape[1] < 2376:
       audio_features = increase_ndarray_size(audio_features)
@@ -162,4 +156,4 @@ def predict(audio_features):
         print('\nModel predicted emotion: ', emotions_classes[mode(y_pred)])
         return emotions_classes[mode(y_pred)]
     except:
-        print('\nModel unable to find mode based on these emotion predictions: ', y_pred)
+        return emotions_classes[y_pred[0]]
