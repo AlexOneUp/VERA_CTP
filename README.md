@@ -46,7 +46,8 @@ An audio classification project which takes audio files recorded from human spee
 
 ## NOTEBOOK VIEWER LINK
 
-See our model implementation [here!](https://nbviewer.org/github/AlexOneUp/VERA_CTP/blob/main/backend/vera-ctp.ipynb)
+See our model implementation [here](https://nbviewer.org/github/AlexOneUp/VERA_CTP/blob/main/backend/vera-ctp.ipynb)!
+
 ## SPECIAL MENTIONS
 
 1. [Vijay Anandan](https://www.linkedin.com/in/vijay-anadan) who helped coordinate with the ideation and guidance in the project.
