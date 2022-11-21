@@ -46,16 +46,7 @@ An audio classification project which takes audio files recorded from human spee
 
 ## NOTEBOOK VIEWER LINK
 
-See our model implementation [here](https://nbviewer.org/github/AlexOneUp/VERA_CTP/blob/main/backend/vera-ctp.ipynb)!
-
-## VIRTUAL ENVIRONMENT SETUP
-
-**_NOTE: Highly recommended to use Kaggle/Google Colab to run the provided .ipynb file because the model requires a GPU for fast processing and thus reducing execution time of the .ipynb file. If you want to run the .ipynb file locally, then the instructions are below._**
-
-1. **MacOS** users look in [setup/macOS_setup.txt](https://github.com/AlexOneUp/VERA_CTP/blob/main/setup/macOS_setup.txt)
-2. **Windows** users look in [setup/Windows_setup.txt](https://github.com/AlexOneUp/VERA_CTP/blob/main/setup/Windows_setup.txt)
-3. **Debian & Ubuntu** users look in [setup/Debian_and_Ubuntu_setup.txt](https://github.com/AlexOneUp/VERA_CTP/blob/main/setup/Debian_and_Ubuntu_setup.txt)
-
+See our model implementation [here!](https://nbviewer.org/github/AlexOneUp/VERA_CTP/blob/main/backend/vera-ctp.ipynb)
 ## SPECIAL MENTIONS
 
 1. [Vijay Anandan](https://www.linkedin.com/in/vijay-anadan) who helped coordinate with the ideation and guidance in the project.
