@@ -6,7 +6,7 @@
 
 <p align="center">
    <a
-      href="https://stock.adobe.com/search?k=waveform&asset_id=327369570">
+      href="https://stock.adobe.com/search?k=waveform&asset_id=327369570" target="_blank">
       <img src="/frontend/styles/Waveform.jpg"
       alt="Waveform illustration" width="600" height="300"/>
    </a>
@@ -51,7 +51,7 @@ An audio classification project which takes audio files recorded from human spee
 ## UI
 <p align="center">
    <img src="/frontend/styles/UI.png"
-      alt="User Interface Design illustration" width="600" height="300"/>
+      alt="User Interface Design illustration" width="920" height="498"/>
 </p>   
 
 ## NOTEBOOK VIEWER LINK
@@ -60,7 +60,7 @@ You can check the Jupyter notebook for [model creation](https://nbviewer.org/git
 
 ## SPECIAL MENTIONS
 
-1. [Vijay Anandan](https://www.linkedin.com/in/vijay-anadan) who helped coordinate with the ideation and guidance in the project.
+[Vijay Anandan](https://www.linkedin.com/in/vijay-anadan) who helped coordinate with the ideation and guidance in the project.
 
 ## CONTRIBUTION AND FEEDBACK
 
