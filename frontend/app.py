@@ -8,6 +8,45 @@ from dotenv import load_dotenv
 from pathlib import Path
 from scipy.io.wavfile import write
 
+import streamlit.components.v1 as components
+
+
+# Use local CSS
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+local_css("styles/style.css")
+# Load Animation
+animation_symbol = "❄"
+
+# Animated Background 
+# Simple Snowflake animation for Christmas
+
+def styling():   
+  return st.markdown(
+    f"""
+    <div class="snowflake">{animation_symbol}</div>
+    <div class="snowflake">{animation_symbol}</div>
+    <div class="snowflake">{animation_symbol}</div>
+    <div class="snowflake">{animation_symbol}</div>
+    <div class="snowflake">{animation_symbol}</div>
+    <div class="snowflake">{animation_symbol}</div>
+    <div class="snowflake">{animation_symbol}</div>
+    <div class="snowflake">{animation_symbol}</div>
+    <div class="snowflake">{animation_symbol}</div>
+
+    <div class='box'>
+      <div class='wave -one'></div>
+      <div class='wave -two'></div>
+      <div class='wave -three'></div>
+    </div>
+
+    """,
+    unsafe_allow_html=True,
+)
+styling()
+
 
 load_dotenv()
 
@@ -16,7 +55,7 @@ backend_path = os.getenv('backend_path')
 project_path = os.getenv('project_path')
 
 sys.path.append(backend_path)
-from audio_processing import *
+# from audio_processing import *
 
 # Prompts to be generated.
 prompts = ['Kids are talking by the door', 'Dogs are sitting by the door',
@@ -36,38 +75,51 @@ subheader = 'We will randomly choose a prompt for you to read:'
 st.subheader(subheader)
 st.write('"' + random.choice(prompts) + '"')
 
-# UI design.
-if st.button('Record'): # Record audio 
-  fs = 44100  # Sample rate.
-  seconds = 3 # Duration of recording.
+def record_btn():
+  if st.button('Record'): # Record audio 
+    fs = 44100  # Sample rate.
+    seconds = 3 # Duration of recording.
   
-  with st.spinner(f'Recording for {seconds} seconds ....'):
-    myrecording = sd.rec(int(seconds * fs), samplerate = fs, channels = 1)
-    sd.wait() # Wait until recording is finished.
+    with st.spinner(f'Recording for {seconds} seconds ....'):
+      myrecording = sd.rec(int(seconds * fs), samplerate = fs, channels = 1)
+      sd.wait() # Wait until recording is finished.
     
-    write(project_path + 'frontend/soundfiles/recording.wav', fs, myrecording) # Save as .wav file.
-    st.success('Recording completed.')
-
+      write(project_path + 'frontend/soundfiles/recording.wav', fs, myrecording) # Save as .wav file.
+      st.success('Recording completed.')
+def play_btn():  
  # Play the recorded audio.
-if st.button('Play'):
-  try:
+  if st.button('Play'):
+    try:
     # Load audio file.
-    audio_file = open(project_path + 'frontend/soundfiles/recording.wav', 'rb')
-    audio_bytes = audio_file.read()
-    st.audio(audio_bytes) 
-  except:
-    st.write('Please record sound first')
+      audio_file = open(project_path + 'frontend/soundfiles/recording.wav', 'rb')
+      audio_bytes = audio_file.read()
+      st.audio(audio_bytes) 
+    except:
+      st.write('Please record sound first')
 
+def classify_btn():
 # Connection with the model.
-if st.button('Classify'):
-  try: 
-    audio_features = get_features(project_path + 'frontend/soundfiles/recording.wav')
-    audio_features = increase_array_size(audio_features)
-    classification = predict(audio_features)
-    st.write(classification)
-  except:
-    st.write('Something went wrong. Please try again')
+  if st.button('Classify'):
+    try: 
+      audio_features = get_features(project_path + 'frontend/soundfiles/recording.wav')
+      audio_features = increase_array_size(audio_features)
+      classification = predict(audio_features)
+      st.write(classification)
+    except:
+      st.write('Something went wrong. Please try again')
 
+
+# UI design.
+col1, col2, col3 = st.columns(3)
+with col1:
+  record_btn()
+
+with col2:
+  play_btn()
+
+with col3:
+  classify_btn()
+  
 # Skeleton on Predicted Value of the audio. 
 # def state_emotion():
   
