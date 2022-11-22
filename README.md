@@ -6,7 +6,7 @@
 
 <p align="center">
    <a
-      href="https://stock.adobe.com/search?k=waveform&asset_id=327369570">
+      href="https://stock.adobe.com/search?k=waveform&asset_id=327369570" target="_blank">
       <img src="/frontend/styles/Waveform.jpg"
       alt="Waveform illustration" width="600" height="300"/>
    </a>
@@ -60,7 +60,7 @@ You can check the Jupyter notebook for [model creation](https://nbviewer.org/git
 
 ## SPECIAL MENTIONS
 
-1. [Vijay Anandan](https://www.linkedin.com/in/vijay-anadan) who helped coordinate with the ideation and guidance in the project.
+[Vijay Anandan](https://www.linkedin.com/in/vijay-anadan) who helped coordinate with the ideation and guidance in the project.
 
 ## CONTRIBUTION AND FEEDBACK
 
