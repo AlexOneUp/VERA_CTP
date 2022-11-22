@@ -55,7 +55,7 @@ backend_path = os.getenv('backend_path')
 project_path = os.getenv('project_path')
 
 sys.path.append(backend_path)
-# from audio_processing import *
+from audio_processing import *
 
 # Bootstrap cards w/ reference to css
 st.markdown("""
