@@ -1,26 +1,24 @@
-import librosa
 import numpy as np
-import os
 import pandas as pd
-import streamlit as st
+from statistics import mode 
+import librosa as ls
 
+import os
 from dotenv import load_dotenv
+load_dotenv()
+
 from keras.utils import np_utils 
-from pathlib import Path
 from sklearn.model_selection import train_test_split 
 from sklearn.preprocessing import LabelEncoder, StandardScaler
-from statistics import mode 
 from tensorflow.keras.models import load_model
-
-
-load_dotenv()
 
 model_path = os.getenv('model_path')
 X_path = os.getenv('X_path')
 y_path = os.getenv('y_path')
 
 # List of emotions the model was trained on.
-emotions_classes = sorted(['surprise','neutral','disgust','fear','sad','calm','happy','angry'])
+emotions_classes = sorted(['surprise','neutral','disgust',
+                            'fear','sad','calm','happy','angry'])
 
 # Load the model.
 model = load_model(model_path)
@@ -48,57 +46,58 @@ X_train = standard_scaler.fit_transform(X_train.values)
 X_valid = standard_scaler.transform(X_valid.values)
 X_test = standard_scaler.transform(X_test.values)
 
-# Noise Injection.
-def inject_noise(data, random = False, rate = 0.035, threshold = 0.075):
-    if random: rate = np.random.random() * threshold
+# Next 4 functions are Audio Data Augmentation:
+# Noise Injection
+def inject_noise(data, random=False, rate = 0.035, threshold = 0.075):
+    if random: 
+        rate = np.random.random() * threshold
     noise_amplitude = rate * np.random.uniform() * np.amax(data)
     augmented_data = data + noise_amplitude * np.random.normal(size = data.shape[0])
+   
     return augmented_data
 
-
-# Pitching. (Audio Data Augmentation)
-def pitching(data, sampling_rate, pitch_factor = 0.7,random = False):
+# Pitching
+def pitching(data, sampling_rate, pitch_factor = 0.7, random=False):
     if random: pitch_factor= np.random.random() * pitch_factor
-    return librosa.effects.pitch_shift(y = data, sr = sampling_rate, n_steps = pitch_factor)
+    return ls.effects.pitch_shift(y=data, sr=sampling_rate, n_steps=pitch_factor)
 
+def streching(data,rate = 0.8): # Stretching
+    return ls.effects.time_stretch(y=data, r=rate)
 
-# Stretching. (Audio Data Augmentation)
-def streching(data,rate = 0.8):
-    return librosa.effects.time_stretch(y = data, r = rate)
-
-
-# Zero crossing rate. (Audio Data Feature Extraction)
+# Zero crossing rate
 def zero_crossing_rate(data,frame_length, hop_length):
-    zcr = librosa.feature.zero_crossing_rate(y = data, frame_length = frame_length, hop_length = hop_length)
+    zcr = ls.feature.zero_crossing_rate(y=data, frame_length=frame_length, hop_length=hop_length)
     return np.squeeze(zcr)
 
-# Root mean square. (Audio Data Feature Extraction)
+# Root mean square
 def root_mean_square(data, frame_length = 2048, hop_length = 512):
-    rms = librosa.feature.rms(y = data, frame_length = frame_length, hop_length = hop_length)
-    return np.squeeze(rms)
+    rms_num = ls.feature.rms(y=data, frame_length=frame_length, hop_length=hop_length)
+    return np.squeeze(rms_num)
 
-# Mel frequency cepstral coefficients. (Audio Data Feature Extraction)
-def mel_frequency_cepstral_coefficients(data, sampling_rate, frame_length = 2048, hop_length = 512, flatten:bool = True):
-    mfcc = librosa.feature.mfcc(y = data,sr = sampling_rate)
+# Mel frequency cepstral coefficients
+def mel_frequency_cepstral_coefficients(data, sampling_rate,
+                                        frame_length=2048,
+                                        hop_length=512,
+                                        flatten: bool=True):
+    mfcc = ls.feature.mfcc(y=data, sr=sampling_rate)
+    
     return np.squeeze(mfcc.T) if not flatten else np.ravel(mfcc.T)
 
-
 # Combined audio data feature extraction.
-def feature_extraction(data, sampling_rate, frame_length = 2048, hop_length = 512):
+def feature_extraction(data, sampling_rate, frame_length=2048, hop_length=512):
     result = np.array([])
     result = np.hstack((result,
-        zero_crossing_rate(data, frame_length, hop_length),
+        ls.feature.zero_crossing_rate(data, frame_length, hop_length),
         root_mean_square(data, frame_length, hop_length),
         mel_frequency_cepstral_coefficients(data, sampling_rate, frame_length, hop_length)
     ))
     return result
 
-
-#  Duration and offset act as placeholders because there is no audio in start and the ending of
-#  each audio file is normally below three seconds.
+# Duration and offset act as placeholders because there is no audio in start and the ending of
+# each audio file is normally below three seconds.
 # Combine audio data augmentation and audio data feature extraction.
 def get_features(file_path, duration = 2.5, offset = 0.6):
-    data, sampling_rate = librosa.load(file_path, duration = duration, offset = offset)
+    data, sampling_rate = ls.load(file_path, duration=duration, offset=offset)
     
     # No audio data augmentation.
     audio_1 = feature_extraction(data, sampling_rate)
@@ -124,29 +123,31 @@ def get_features(file_path, duration = 2.5, offset = 0.6):
     
     return audio_features
 
-
 # Increase ndarray dimensions to [4,2376].
 def increase_ndarray_size(features_test):
     tmp = np.zeros([4, 2377])
     offsets = [0, 1]
-    insert_here = tuple([slice(offsets[dim], offsets[dim] + features_test.shape[dim]) for dim in range(features_test.ndim)])
+    insert_here = tuple([slice(offsets[dim],
+                        offsets[dim] + features_test.shape[dim])
+                        for dim in range(features_test.ndim)])
+    
     tmp[insert_here] = features_test
     features_test = tmp
     features_test = np.delete(features_test, 0, axis=1)
+    
     return features_test
-
 
 # Determine if ndarray needs to be increase in size.
 def increase_array_size(audio_features):
     if audio_features.shape[1] < 2376:
-      audio_features = increase_ndarray_size(audio_features)
+        audio_features = increase_ndarray_size(audio_features)
     return audio_features
-
 
 # Make the prediction.
 def predict(audio_features):
     audio_features = standard_scaler.transform(audio_features)
     audio_features = np.expand_dims(audio_features, axis = 2)
+
     y_pred = model.predict(audio_features)
     y_pred = np.argmax(y_pred, axis = 1)
     
@@ -155,5 +156,5 @@ def predict(audio_features):
         print('\nAvailable emotions_classes = ', emotions_classes)
         print('\nModel predicted emotion: ', emotions_classes[mode(y_pred)])
         return emotions_classes[mode(y_pred)]
-    except:
-        return emotions_classes[y_pred[0]]
+
+    except: return emotions_classes[y_pred[0]]

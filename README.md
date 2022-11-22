@@ -5,7 +5,11 @@
 ## INTRODUCTION
 
 <p align="center">
-<img alt="Wave Format Audio" src="https://t4.ftcdn.net/jpg/03/27/36/95/360_F_327369570_CAxxxHHLvjk6IJ3wGi1kuW6WTtqjaMpc.jpg" width="600" height="300"/>
+   <a
+      href="https://stock.adobe.com/search?k=waveform&asset_id=327369570">
+      <img src="/frontend/styles/Waveform.jpg"
+      alt="Waveform illustration" width="600" height="300"/>
+   </a>
 </p>
 
 An audio classification project which takes audio files recorded from human speech, primarily in .wav format, and predicts the emotion conveyed from the voice.
@@ -44,9 +48,15 @@ An audio classification project which takes audio files recorded from human spee
 8. [Kaggle](https://www.kaggle.com/)
 9. [Streamlit](https://streamlit.io/)
 
+## UI
+<p align="center">
+   <img src="/frontend/styles/UI.png"
+      alt="User Interface Design illustration" width="600" height="300"/>
+</p>   
+
 ## NOTEBOOK VIEWER LINK
 
-See our model implementation [here](https://nbviewer.org/github/AlexOneUp/VERA_CTP/blob/main/backend/vera-ctp.ipynb)!
+You can check the Jupyter notebook for [model creation](https://nbviewer.org/github/AlexOneUp/VERA_CTP/blob/main/backend/vera-ctp.ipynb) here.
 
 ## SPECIAL MENTIONS
 
