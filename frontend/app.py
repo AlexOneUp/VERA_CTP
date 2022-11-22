@@ -57,6 +57,38 @@ project_path = os.getenv('project_path')
 sys.path.append(backend_path)
 # from audio_processing import *
 
+# Bootstrap cards w/ reference to css
+st.markdown("""
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  """,
+  unsafe_allow_html=True
+  )
+def card():
+  return """
+    <div class="card" style="width: 100%;">
+      <div class="card-header">
+      Card Header
+      </div>
+
+      <img class="card-img-top" src="https://t4.ftcdn.net/jpg/03/27/36/95/360_F_327369570_CAxxxHHLvjk6IJ3wGi1kuW6WTtqjaMpc.jpg" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">Voice Emotion Recognition on Audio</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary col-md-3">Go somewhere</a>
+        <a href="#" class="btn btn-primary col-md-3">Go somewhere</a>
+        <a href="#" class="btn btn-primary col-md-3">Go somewhere</a>
+        <div class='btn-toolbar'>
+          <div class='btn-group'>
+            <button class="btn-danger signin">Sign In</button>
+            <button class="btn-success signup">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  """
+st.markdown(card(), unsafe_allow_html=True)
+
+
 # Prompts to be generated.
 prompts = ['Kids are talking by the door', 'Dogs are sitting by the door',
 'It\'s eleven o\'clock', 'That is exactly what happened', 'I\'m on my way to the meeting',
