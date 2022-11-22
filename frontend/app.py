@@ -1,6 +1,5 @@
 import random
 import streamlit as st
-# import streamlit.components.v1 as components
 import sounddevice as sd
 from scipy.io.wavfile import write
 
@@ -13,25 +12,37 @@ load_dotenv()
 backend_path = os.getenv('backend_path')
 project_path = os.getenv('project_path')
 sys.path.append(backend_path)
-from audio_processing import *
+from audio_processing import get_features, increase_array_size, predict
 
 def local_css(file_name): # Use local CSS
   with open(file_name) as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+local_css("styles/style.css") 
 
-animation_symbol = "❄" # Animated Background 
-def styling(): # Simple Snowflake animation for Christmas
+# Prompts used in training data.
+prompts = ['Kids are talking by the door', 'Dogs are sitting by the door',
+'It\'s eleven o\'clock', 'That is exactly what happened', 'I\'m on my way to the meeting',
+'I wonder what this is about', 'The airplane is almost full', 'Maybe tomorrow it will be cold',
+'I think I have a doctor\'s appointment', 'Say the word apple']
+
+emotions = ['angry 😡', 'calm 😌', 'disgusted 🤢', 'fearful 😨', 'happy 😆',
+          'neutral 🙂', 'sad 😢', 'surprised 😳']
+
+emotion = random.choice(emotions) 
+partition = emotion.split(' ')
+particle = partition[1]
+
+def styling(): # model for 'snowfall' animation 
   return st.markdown(
     f"""
-      <div class="snowflake">{animation_symbol}</div>
-      <div class="snowflake">{animation_symbol}</div>
-      <div class="snowflake">{animation_symbol}</div>
-      <div class="snowflake">{animation_symbol}</div>
-      <div class="snowflake">{animation_symbol}</div>
-      <div class="snowflake">{animation_symbol}</div>
-      <div class="snowflake">{animation_symbol}</div>
-      <div class="snowflake">{animation_symbol}</div>
-      <div class="snowflake">{animation_symbol}</div>
+      <div class="snowflake">{particle}</div>
+      <div class="snowflake">{particle}</div>
+      <div class="snowflake">{particle}</div>
+      <div class="snowflake">{particle}</div>
+      <div class="snowflake">{particle}</div>
+      <div class="snowflake">{particle}</div>
+      <div class="snowflake">{particle}</div>
+      <div class="snowflake">{particle}</div>
 
       <div class='box'>
         <div class='wave -one'></div>
@@ -41,31 +52,30 @@ def styling(): # Simple Snowflake animation for Christmas
     """, unsafe_allow_html=True,
   )
 
-def card():
-  return """
-    <div class="card" style="width: 100%;">
-      <div class="card-header">
-      Card Header
-      </div>
+# def card():
+#   return """
+#     <div class="card" style="width: 100%;">
+#       <div class="card-header">
+#       Card Header
+#       </div>
 
-      <img class="card-img-top" src="https://t4.ftcdn.net/jpg/03/27/36/95/360_F_327369570_CAxxxHHLvjk6IJ3wGi1kuW6WTtqjaMpc.jpg" alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">Voice Emotion Recognition on Audio</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary col-md-3">Go somewhere</a>
-        <a href="#" class="btn btn-primary col-md-3">Go somewhere</a>
-        <a href="#" class="btn btn-primary col-md-3">Go somewhere</a>
-        <div class='btn-toolbar'>
-          <div class='btn-group'>
-            <button class="btn-danger signin">Sign In</button>
-            <button class="btn-success signup">Sign Up</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  """
+#       <img class="card-img-top" src="https://t4.ftcdn.net/jpg/03/27/36/95/360_F_327369570_CAxxxHHLvjk6IJ3wGi1kuW6WTtqjaMpc.jpg" alt="Card image cap">
+#       <div class="card-body">
+#         <h5 class="card-title">Voice Emotion Recognition on Audio</h5>
+#         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+#         <a href="#" class="btn btn-primary col-md-3">Go somewhere</a>
+#         <a href="#" class="btn btn-primary col-md-3">Go somewhere</a>
+#         <a href="#" class="btn btn-primary col-md-3">Go somewhere</a>
+#         <div class='btn-toolbar'>
+#           <div class='btn-group'>
+#             <button class="btn-danger signin">Sign In</button>
+#             <button class="btn-success signup">Sign Up</button>
+#           </div>
+#         </div>
+#       </div>
+#     </div>
+#   """
 # 
-local_css("styles/style.css") 
 styling()
 
 # Bootstrap cards w/ reference to css
@@ -76,14 +86,6 @@ st.markdown("""
 )
 
 # st.markdown(card(), unsafe_allow_html=True)
-
-# Prompts to be generated.
-prompts = ['Kids are talking by the door', 'Dogs are sitting by the door',
-'It\'s eleven o\'clock', 'That is exactly what happened', 'I\'m on my way to the meeting',
-'I wonder what this is about', 'The airplane is almost full', 'Maybe tomorrow it will be cold',
-'I think I have a doctor\'s appointment', 'Say the word apple']
-
-emotions = ['angry', 'calm', 'disgusted', 'fearful', 'happy', 'neutral', 'sad', 'surprised']
 
 # Title.
 st.write('# Voice Emotion Recognition on Audio')
@@ -99,7 +101,6 @@ prompt = '"' + random.choice(prompts) + '"'
 st.subheader(prompt)
 
 # prompting emotion to user
-emotion = random.choice(emotions)
 emotion_prompt = "Try to sound " + emotion + ":"
 st.subheader(emotion_prompt)
 
@@ -124,7 +125,7 @@ def play_btn(): # Play the recorded audio.
     
     except: st.write('Please record sound first')
 
-def classify_btn(): # Connection with the model.
+def classify_btn():
   if st.button('Classify'):
     try: 
       audio_features = get_features(project_path + 'frontend/soundfiles/recording.wav')
@@ -155,5 +156,9 @@ with col3: classify_btn()
 #   except:
 #     play = st.button('Predict Emotion', key='emotion', on_click=state_emotion)
 
-repo = 'Check out our [GitHub repository](https://github.com/Alexoneup/VERA_CTP)'
-st.markdown(repo)
+repo = """<br>
+          <p align="right"> Check out our 
+            <a href="https://github.com/Alexoneup/VERA_CTP"> GitHub repository </a>
+          </p>
+        """
+st.write(repo, unsafe_allow_html=True)

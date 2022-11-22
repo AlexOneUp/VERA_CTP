@@ -17,8 +17,8 @@ X_path = os.getenv('X_path')
 y_path = os.getenv('y_path')
 
 # List of emotions the model was trained on.
-emotions_classes = sorted(['surprise','neutral','disgust',
-                            'fear','sad','calm','happy','angry'])
+emotions_classes = ['angry','calm', 'disgust','fear',
+                    'happy','neutral', 'sad','surprise']
 
 # Load the model.
 model = load_model(model_path)
@@ -49,11 +49,11 @@ X_test = standard_scaler.transform(X_test.values)
 # Next 4 functions are Audio Data Augmentation:
 # Noise Injection
 def inject_noise(data, random=False, rate = 0.035, threshold = 0.075):
-    if random: 
-        rate = np.random.random() * threshold
+    if random: rate = np.random.random() * threshold
+
     noise_amplitude = rate * np.random.uniform() * np.amax(data)
     augmented_data = data + noise_amplitude * np.random.normal(size = data.shape[0])
-   
+
     return augmented_data
 
 # Pitching
@@ -158,3 +158,8 @@ def predict(audio_features):
         return emotions_classes[mode(y_pred)]
 
     except: return emotions_classes[y_pred[0]]
+
+# idea for concatenating emoji with predicted label:
+# emotions_classes = ['angry','calm', 'disgust','fear','happy','neutral', 'sad','surprise']
+# emotion_dict = {'angry', 'calm', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise'}
+# # emotions = ['angry 😡', 'calm 😌', 'disgusted 🤢', 'fearful 😨', 'happy 😆','neutral 🙂', 'sad 😢', 'surprised 😳']

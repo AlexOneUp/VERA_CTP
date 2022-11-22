@@ -51,7 +51,7 @@ An audio classification project which takes audio files recorded from human spee
 ## UI
 <p align="center">
    <img src="/frontend/styles/UI.png"
-      alt="User Interface Design illustration" width="600" height="300"/>
+      alt="User Interface Design illustration" width="1721" height="500"/>
 </p>   
 
 ## NOTEBOOK VIEWER LINK
