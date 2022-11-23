@@ -35,13 +35,13 @@ y = y.squeeze()
 y = np_utils.to_categorical(label.fit_transform(y))
 
 # Split data into training, validation, and testing.
-X_train, X_remain, y_train, y_remain = train_test_split(X, y, test_size = 0.2, random_state = 42)
-X_valid, X_test, y_valid, y_test = train_test_split(X_remain, y_remain, test_size = 0.5, random_state = 42)
+X_train, X_remain, y_train, y_remain = train_test_split(X, y, test_size=0.2, random_state=42)
+X_valid, X_test, y_valid, y_test = train_test_split(X_remain, y_remain, test_size=0.5, random_state=42)
 
 # Standardize / Scale data.
 # Standardize features by removing the mean and scaling to unit variance.
 # z = (x - u) / s
-standard_scaler = StandardScaler ()
+standard_scaler = StandardScaler()
 X_train = standard_scaler.fit_transform(X_train.values)
 X_valid = standard_scaler.transform(X_valid.values)
 X_test = standard_scaler.transform(X_test.values)
@@ -158,8 +158,3 @@ def predict(audio_features):
         return emotions_classes[mode(y_pred)]
 
     except: return emotions_classes[y_pred[0]]
-
-# idea for concatenating emoji with predicted label:
-# emotions_classes = ['angry','calm', 'disgust','fear','happy','neutral', 'sad','surprise']
-# emotion_dict = {'angry', 'calm', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise'}
-# # emotions = ['angry 😡', 'calm 😌', 'disgusted 🤢', 'fearful 😨', 'happy 😆','neutral 🙂', 'sad 😢', 'surprised 😳']

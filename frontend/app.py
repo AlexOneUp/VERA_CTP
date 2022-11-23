@@ -1,6 +1,6 @@
 import random
 import streamlit as st
-import sounddevice as sd
+from sounddevice import rec, wait
 from scipy.io.wavfile import write
 
 import os
@@ -25,21 +25,21 @@ prompts = ['Kids are talking by the door', 'Dogs are sitting by the door',
 'I wonder what this is about', 'The airplane is almost full', 'Maybe tomorrow it will be cold',
 'I think I have a doctor\'s appointment', 'Say the word apple']
 
-emotions = ['angry 😡', 'calm 😌', 'disgusted 🤢', 'fearful 😨', 'happy 😆',
-          'neutral 🙂', 'sad 😢', 'surprised 😳']
+# emotions = ['angry 😡', 'calm 😌', 'disgusted 🤢', 'fearful 😨', 'happy 😆',
+          # 'neutral 🙂', 'sad 😢', 'surprised 😳']
 
-emotion = random.choice(emotions) 
-partition = emotion.split(' ')
+emotion_dict = {'angry': 'angry 😡', 'calm': 'calm 😌',
+               'disgust': 'disgusted 🤢', 'fear': 'scared 😨',
+               'happy': 'happy 😆', 'neutral': 'neutral 🙂',
+               'sad': 'sad 😢', 'surprise': 'surprised 😳'}
+
+emotion = random.choice(list(emotion_dict)) 
+partition = emotion_dict.get(emotion).split(' ')
 particle = partition[1]
 
 def styling(): # model for 'snowfall' animation 
   return st.markdown(
     f"""
-      <div class="snowflake">{particle}</div>
-      <div class="snowflake">{particle}</div>
-      <div class="snowflake">{particle}</div>
-      <div class="snowflake">{particle}</div>
-      <div class="snowflake">{particle}</div>
       <div class="snowflake">{particle}</div>
       <div class="snowflake">{particle}</div>
       <div class="snowflake">{particle}</div>
@@ -101,7 +101,7 @@ prompt = '"' + random.choice(prompts) + '"'
 st.subheader(prompt)
 
 # prompting emotion to user
-emotion_prompt = "Try to sound " + emotion + ":"
+emotion_prompt = "Try to sound " + emotion_dict.get(emotion) + ":"
 st.subheader(emotion_prompt)
 
 def record_btn():
@@ -110,8 +110,8 @@ def record_btn():
     seconds = 3 # Duration of recording.
   
     with st.spinner(f'Recording for {seconds} seconds ....'):
-      myrecording = sd.rec(int(seconds * fs), samplerate = fs, channels = 1)
-      sd.wait() # Wait until recording is finished.
+      myrecording = rec(int(seconds * fs), samplerate = fs, channels = 1)
+      wait() # Wait until recording is finished.
     
       write(project_path + 'frontend/soundfiles/recording.wav', fs, myrecording) # Save as .wav file.
       st.success('Recording completed.')
@@ -128,11 +128,13 @@ def play_btn(): # Play the recorded audio.
 def classify_btn():
   if st.button('Classify'):
     try: 
-      audio_features = get_features(project_path + 'frontend/soundfiles/recording.wav')
+      wav_path = project_path + 'frontend/soundfiles/recording.wav'
+      audio_features = get_features(wav_path, 3)
       audio_features = increase_array_size(audio_features)
-      classification = predict(audio_features)
+      emotion = predict(audio_features)
       
-      st.write(classification)
+      result = emotion_dict.get(emotion)
+      st.write(emotion)
     
     except: st.write('Something went wrong. Please try again')
 
