@@ -6,7 +6,7 @@
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 
-# pyenv
+# Pyenv
 .python-version
 
 # Apple Desktop Services Store
@@ -16,5 +16,5 @@
 # Datasets
 Datasets/
 
-# python cache files
-**__pycache__
+# Python Cache Files
+__pycache__/
