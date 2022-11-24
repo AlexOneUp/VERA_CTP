@@ -20,4 +20,4 @@ Datasets/
 backend/__pycache__
 
 # Visual Studio Code
-.vscode
+.vscode/*
