@@ -17,4 +17,7 @@
 Datasets/
 
 # Python Cache Files
-__pycache__/
+backend/__pycache__
+
+# Visual Studio Code
+.vscode
