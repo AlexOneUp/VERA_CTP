@@ -17,9 +17,10 @@
 Datasets/
 
 # Python Cache Files
-/backend/__pycache__
+/backend/__pycache__/
 
 # Visual Studio Code
 .vscode/*
+.vscode/
 !.vscode/settings.json
 /*

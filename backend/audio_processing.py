@@ -1,17 +1,23 @@
-import librosa as ls
-import numpy as np
-import pandas as pd
+import librosa as ls  # Music and audio analysis.
+import numpy as np  # Data wrangling.
+import os  # Manipulate operating system interfaces.
+import pandas as pd  # Data handling.
 
-import os
+# Python-dotenv reads key-value pairs from a .env file and can set them as environment variables.
 from dotenv import load_dotenv
 
 load_dotenv()
 
-from keras.utils import np_utils
+from keras.utils import np_utils  # Keras utilities.
+
+# To split data in training/validating/testing.
 from sklearn.model_selection import train_test_split
+
+# To encode target labels with value between 0 and n_classes-1.
+# To perform standardization by centering and scaling.
 from sklearn.preprocessing import LabelEncoder, StandardScaler
-from statistics import mode
-from tensorflow.keras.models import load_model
+from statistics import mode  # Find the most likely predicted emotion.
+from tensorflow.keras.models import load_model  # To load the model.
 
 model_path = os.getenv("model_path")
 X_path = os.getenv("X_path")
@@ -186,12 +192,11 @@ def predict(audio_features):
     y_pred = model.predict(audio_features)
     y_pred = np.argmax(y_pred, axis=1)
 
-    # try:
+    try:
+        # Model debugging.
         # print("\nPredicted emotion for each and every feature extraction.\n\n", y_pred)
         # print("\nAvailable emotions_classes = ", emotions_classes)
         # print("\nModel predicted emotion: ", emotions_classes[mode(y_pred)])
-        # return here
-    return emotions_classes[mode(y_pred)]
-
-    # except:
-        # return emotions_classes[y_pred[0]]
+        return emotions_classes[mode(y_pred)]
+    except:
+        return emotions_classes[y_pred[0]]

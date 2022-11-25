@@ -1,12 +1,16 @@
-import os
-import random
-import streamlit as st
-import sys
+import os  # Manipulate operating system interfaces.
+import random  # Random variable generators.
+import streamlit as st  # Streamlit.
+import sys  # System-specific parameters and functions.
 
+# Python-dotenv reads key-value pairs from a .env file and can set them as environment variables.
 from dotenv import load_dotenv
-from sounddevice import rec, wait
-from scipy.io.wavfile import write
 
+# This Python module provides bindings for the PortAudio library and a few convenience functions to play and record NumPy arrays containing audio signals.
+from sounddevice import rec, wait
+
+# Write a NumPy array as a .wav file.
+from scipy.io.wavfile import write
 
 load_dotenv()
 
@@ -17,11 +21,13 @@ sys.path.append(backend_path)
 from audio_processing import get_features, increase_array_size, predict
 
 
-def local_css(file_name):  # Use local CSS
+# Use local CSS.
+def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 
+# Load CSS.
 local_css("styles/style.css")
 
 # Prompts used in training data.
@@ -74,12 +80,8 @@ if "is_emotion" not in st.session_state:
 if "is_first_time_prompt" not in st.session_state:
     st.session_state["is_first_time_prompt"] = True
 
-
-# emotion = random.choice(list(emotion_dict))
-# partition = emotion_dict.get(emotion).split(" ")
-
-
-def styling(particle):  # model for 'snowfall' animation
+# Emotion emoji animation.
+def styling(particle):
     return st.markdown(
         f"""
       <div class="snowflake">{particle}</div>
@@ -124,11 +126,12 @@ def styling(particle):  # model for 'snowfall' animation
 #
 
 
-# Bootstrap cards w/ reference to CSS.
+# Bootstrap cards with reference to CSS.
 st.markdown(
     """<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    """, unsafe_allow_html=True,
+    """,
+    unsafe_allow_html=True,
 )
 
 
@@ -158,6 +161,7 @@ header = f"""<p align="center" style="font-family: monospace; color: #FAF9F6; fo
 st.markdown(header, unsafe_allow_html=True)
 
 
+# Prompt button.
 def prompt_btn():
     if not (st.session_state["is_first_time_prompt"]):
         styling(particle=st.session_state["particle"])
@@ -169,7 +173,8 @@ def prompt_btn():
         f"""
             <p align="center" style="font-family: monospace; color: #ffffff; font-size: 2rem;">
             {st.session_state["prompt"]}</p>
-        """, unsafe_allow_html=True,
+        """,
+        unsafe_allow_html=True,
     )
 
     if not (st.session_state["is_first_time_prompt"]):
@@ -177,17 +182,20 @@ def prompt_btn():
             f"""
                 <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;">
                 Try to sound {emotion_dict.get(st.session_state["emotion"])}</p>
-            """, unsafe_allow_html=True,
+            """,
+            unsafe_allow_html=True,
         )
     else:
         st.markdown(
             f"""
                 <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;">
                 Please generate an emotion!</p>
-            """, unsafe_allow_html=True,
+            """,
+            unsafe_allow_html=True,
         )
 
 
+# Emotion button.
 def emotion_btn():
     st.session_state["initial_styling"] = False
     st.session_state["is_first_time_prompt"] = False
@@ -197,6 +205,15 @@ def emotion_btn():
     emotion = partition[0]
     st.session_state["emotion"] = emotion
 
+    if st.session_state["emotion"] == "disgusted":
+        st.session_state["emotion"] = "disgust"
+
+    if st.session_state["emotion"] == "scared":
+        st.session_state["emotion"] = "fear"
+
+    if st.session_state["emotion"] == "surprised":
+        st.session_state["emotion"] = "surprise"
+
     particle = partition[1]
     st.session_state["particle"] = particle
     styling(particle=st.session_state["particle"])
@@ -205,13 +222,15 @@ def emotion_btn():
         f"""
             <p align="center" style="font-family: monospace; color: #ffffff; font-size: 2rem;">
             {st.session_state["prompt"]}</p>
-        """, unsafe_allow_html=True,
+        """,
+        unsafe_allow_html=True,
     )
     st.markdown(
         f"""
             <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;">
             Try to sound {emotion_dict.get(st.session_state["emotion"])}</p>
-        """, unsafe_allow_html=True,
+        """,
+        unsafe_allow_html=True,
     )
 
 
@@ -237,14 +256,16 @@ def play_btn():  # Play the recorded audio.
         f"""
             <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2rem;">
             {st.session_state["prompt"]}</p>
-        """, unsafe_allow_html=True,
+        """,
+        unsafe_allow_html=True,
     )
     if not (st.session_state["is_first_time_prompt"]):
         st.markdown(
             f"""
                 <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;">
                 Try to sound {emotion_dict.get(st.session_state["emotion"])}</p>
-            """, unsafe_allow_html=True,
+            """,
+            unsafe_allow_html=True,
         )
     else:
         st.markdown(
@@ -252,14 +273,16 @@ def play_btn():  # Play the recorded audio.
                 <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;">
                 Please generate a prompt and an emotion!</p>
                 <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;">Then, record your audio.</p>
-            """, unsafe_allow_html=True,
+            """,
+            unsafe_allow_html=True,
         )
     try:  # Load audio file.
         audio_file = open(project_path + "frontend/soundfiles/recording.wav", "rb")
         audio_bytes = audio_file.read()
         st.audio(audio_bytes)
-    
-    except: st.write("Please record sound first.")
+
+    except:
+        st.write("Please record sound first.")
 
 
 # Classify button.
@@ -267,12 +290,30 @@ def classify_btn():
     try:
         wav_path = project_path + "frontend/soundfiles/recording.wav"
         audio_features = get_features(wav_path, 3)
-        
+
         audio_features = increase_array_size(audio_features)
         emotion = predict(audio_features)
 
-        if(st.session_state["emotion"] != ""): # what happens when st.session_state["emotion"] == ""
-            if(emotion in st.session_state["emotion"]):
+        if emotion == "disgust":
+            emotion = "disgusted"
+
+        if emotion == "fear":
+            emotion = "scared"
+
+        if emotion == "surprise":
+            emotion = "surprised"
+
+        if st.session_state["emotion"] == "disgust":
+            st.session_state["emotion"] = "disgusted"
+
+        if st.session_state["emotion"] == "fear":
+            st.session_state["emotion"] = "scared"
+
+        if st.session_state["emotion"] == "surprise":
+            st.session_state["emotion"] = "surprised"
+
+        if st.session_state["emotion"] != "":
+            if emotion in st.session_state["emotion"]:
                 st.session_state["particle"] = "😆"
                 styling(particle=st.session_state["particle"])
                 st.markdown(
@@ -280,17 +321,21 @@ def classify_btn():
                         <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;">
                         You tried to sound {st.session_state["emotion"].upper()} and you sounded {emotion.upper()}</p>
                         <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;">Well done!👍</p>
-                    """, unsafe_allow_html=True,
+                    """,
+                    unsafe_allow_html=True,
                 )
 
                 try:  # Load audio file.
-                    audio_file = open(project_path + "frontend/soundfiles/recording.wav", "rb")
+                    audio_file = open(
+                        project_path + "frontend/soundfiles/recording.wav", "rb"
+                    )
                     audio_bytes = audio_file.read()
                     st.audio(audio_bytes)
-               
-                except: st.write("Please record sound first.")
+
+                except:
+                    st.write("Please record sound first.")
                 st.balloons()
-            
+
             else:
                 st.session_state["particle"] = "😢"
                 styling(particle=st.session_state["particle"])
@@ -298,16 +343,28 @@ def classify_btn():
                     f"""
                         <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;">
                         You tried to sound {st.session_state["emotion"].upper()} however you sounded {emotion.upper()}👎</p>
-                    """, unsafe_allow_html=True,
+                    """,
+                    unsafe_allow_html=True,
                 )
 
                 try:  # Load audio file.
-                    audio_file = open(project_path + "frontend/soundfiles/recording.wav", "rb")
+                    audio_file = open(
+                        project_path + "frontend/soundfiles/recording.wav", "rb"
+                    )
                     audio_bytes = audio_file.read()
                     st.audio(audio_bytes)
-                
-                except: st.write("Please record sound first.")
-    except: st.write("Something went wrong. Please try again.")
+
+                except:
+                    st.write("Please record sound first.")
+        else:
+            st.markdown(
+                f"""
+                <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;"> Please generate a prompt and an emotion.</p>
+                """,
+                unsafe_allow_html=True,
+            )
+    except:
+        st.write("Something went wrong. Please try again.")
 
 
 # User Interface.
@@ -354,7 +411,8 @@ st.markdown(
         <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 1rem;"><b> Check out our
         <a href="https://github.com/Alexoneup/VERA_CTP" style="color: #FAF9F6;"> GitHub repository</a></b>
         </p>
-   """, unsafe_allow_html=True,
+   """,
+    unsafe_allow_html=True,
 )
 
 
