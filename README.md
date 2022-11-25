@@ -51,7 +51,7 @@ An audio classification project which takes audio files recorded from human spee
 ## UI
 <p align="center">
    <img src="/frontend/styles/UI.png"
-      alt="User Interface Design illustration" width="1721" height="500"/>
+      alt="User Interface Design illustration" width="1460" height="500"/>
 </p>   
 
 ## NOTEBOOK VIEWER LINK
@@ -64,7 +64,7 @@ You can check the Jupyter notebook for [model creation](https://nbviewer.org/git
 
 ## CONTRIBUTION AND FEEDBACK
 
-If you would like to contribute or have any feedback for this project please feel free to contact one of the three members of the group.
+If you would like to contribute or have any feedback for this project please feel free to contact any one of the contributors.
 
 ## CODE LICENSE
 

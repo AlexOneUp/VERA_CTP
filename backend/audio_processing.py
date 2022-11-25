@@ -186,11 +186,12 @@ def predict(audio_features):
     y_pred = model.predict(audio_features)
     y_pred = np.argmax(y_pred, axis=1)
 
-    try:
-        print("\nPredicted emotion for each and every feature extraction.\n\n", y_pred)
-        print("\nAvailable emotions_classes = ", emotions_classes)
-        print("\nModel predicted emotion: ", emotions_classes[mode(y_pred)])
-        return emotions_classes[mode(y_pred)]
+    # try:
+        # print("\nPredicted emotion for each and every feature extraction.\n\n", y_pred)
+        # print("\nAvailable emotions_classes = ", emotions_classes)
+        # print("\nModel predicted emotion: ", emotions_classes[mode(y_pred)])
+        # return here
+    return emotions_classes[mode(y_pred)]
 
-    except:
-        return emotions_classes[y_pred[0]]
+    # except:
+        # return emotions_classes[y_pred[0]]
