@@ -17,9 +17,11 @@ Instructions to setup your virtual environment using pyenv on Debian/Ubuntu:
 4. Install Python Version 3.10.1:
     pyenv install 3.10.1
 
-5. Clone this repository.
+5. Clone this repository:
+    git clone https://github.com/AlexOneUp/VERA_CTP.git
 
-6. Navigate to the cloned repository folder.
+6. Navigate to the cloned repository folder:
+    cd VERA_CTP
 
 7. Use the installed Python version in the cloned repository folder:
     pyenv local 3.10.1
@@ -46,3 +48,6 @@ Instructions to setup your virtual environment using pyenv on Debian/Ubuntu:
     jupyter notebook
 
 15. Select the .vera-venv kernel to run the Jupyter Notebook.
+
+16. Run streamlit:
+    streamlit run app.py
