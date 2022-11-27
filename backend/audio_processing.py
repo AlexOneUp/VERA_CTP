@@ -66,49 +66,41 @@ X_valid = standard_scaler.transform(X_valid.values)
 X_test = standard_scaler.transform(X_test.values)
 
 # Next 4 functions are Audio Data Augmentation:
-# Noise Injection
-def inject_noise(data, random=False, rate=0.035, threshold=0.075):
+# Noise Injection.
+def inject_noise(data, sampling_rate=0.035, threshold=0.075, random=False):
     if random:
-        rate = np.random.random() * threshold
-
-    noise_amplitude = rate * np.random.uniform() * np.amax(data)
+        sampling_rate = np.random.random() * threshold
+    noise_amplitude = sampling_rate * np.random.uniform() * np.amax(data)
     augmented_data = data + noise_amplitude * np.random.normal(size=data.shape[0])
-
     return augmented_data
 
 
-# Pitching
+# Pitching.
 def pitching(data, sampling_rate, pitch_factor=0.7, random=False):
     if random:
         pitch_factor = np.random.random() * pitch_factor
-    return ls.effects.pitch_shift(y=data, sr=sampling_rate, n_steps=pitch_factor)
+    return librosa.effects.pitch_shift(y=data, sr=sampling_rate, n_steps=pitch_factor)
 
 
-# Stretching
-def streching(data, rate=0.8):
-    return ls.effects.time_stretch(y=data, r=rate)
-
-
-# Zero crossing rate
+# Zero crossing rate.
 def zero_crossing_rate(data, frame_length, hop_length):
-    zcr = ls.feature.zero_crossing_rate(
+    zcr = librosa.feature.zero_crossing_rate(
         y=data, frame_length=frame_length, hop_length=hop_length
     )
     return np.squeeze(zcr)
 
 
-# Root mean square
+# Root mean square.
 def root_mean_square(data, frame_length=2048, hop_length=512):
-    rms_num = ls.feature.rms(y=data, frame_length=frame_length, hop_length=hop_length)
-    return np.squeeze(rms_num)
+    rms = librosa.feature.rms(y=data, frame_length=frame_length, hop_length=hop_length)
+    return np.squeeze(rms)
 
 
-# Mel frequency cepstral coefficients
+# Mel frequency cepstral coefficients.
 def mel_frequency_cepstral_coefficients(
     data, sampling_rate, frame_length=2048, hop_length=512, flatten: bool = True
 ):
-    mfcc = ls.feature.mfcc(y=data, sr=sampling_rate)
-
+    mfcc = librosa.feature.mfcc(y=data, sr=sampling_rate)
     return np.squeeze(mfcc.T) if not flatten else np.ravel(mfcc.T)
 
 
