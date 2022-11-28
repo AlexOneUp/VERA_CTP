@@ -44,9 +44,6 @@ prompts = [
     "Say the word apple",
 ]
 
-# emotions = ['angry 😡', 'calm 😌', 'disgusted 🤢', 'fearful 😨', 'happy 😆',
-# 'neutral 🙂', 'sad 😢', 'surprised 😳']
-
 emotion_dict = {
     "angry": "angry 😡",
     "calm": "calm 😌",
@@ -100,32 +97,6 @@ def styling(particle):
     )
 
 
-# def card():
-#   return """
-#     <div class="card" style="width: 100%;">
-#       <div class="card-header">
-#       Card Header
-#       </div>
-
-#       <img class="card-img-top" src="https://t4.ftcdn.net/jpg/03/27/36/95/360_F_327369570_CAxxxHHLvjk6IJ3wGi1kuW6WTtqjaMpc.jpg" alt="Card image cap">
-#       <div class="card-body">
-#         <h5 class="card-title">Voice Emotion Recognition on Audio</h5>
-#         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-#         <a href="#" class="btn btn-primary col-md-3">Go somewhere</a>
-#         <a href="#" class="btn btn-primary col-md-3">Go somewhere</a>
-#         <a href="#" class="btn btn-primary col-md-3">Go somewhere</a>
-#         <div class='btn-toolbar'>
-#           <div class='btn-group'>
-#             <button class="btn-danger signin">Sign In</button>
-#             <button class="btn-success signup">Sign Up</button>
-#           </div>
-#         </div>
-#       </div>
-#     </div>
-#   """
-#
-
-
 # Bootstrap cards with reference to CSS.
 st.markdown(
     """<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
@@ -133,9 +104,6 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
-
-
-# st.markdown(card(), unsafe_allow_html=True)
 
 
 def make_grid(rows, cols):
@@ -289,7 +257,7 @@ def play_btn():  # Play the recorded audio.
 def classify_btn():
     try:
         wav_path = project_path + "frontend/soundfiles/recording.wav"
-        audio_features = get_features(wav_path, 3)
+        audio_features = get_features(wav_path)
 
         audio_features = increase_array_size(audio_features)
         emotion = predict(audio_features)
@@ -318,10 +286,10 @@ def classify_btn():
                 styling(particle=st.session_state["particle"])
                 st.markdown(
                     f"""
-                        <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;">
-                        You tried to sound {st.session_state["emotion"].upper()} and you sounded {emotion.upper()}</p>
-                        <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;">Well done!👍</p>
-                    """,
+                            <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;">
+                            You tried to sound {st.session_state["emotion"].upper()} and you sounded {emotion.upper()}</p>
+                            <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;">Well done!👍</p>
+                        """,
                     unsafe_allow_html=True,
                 )
 
@@ -341,9 +309,9 @@ def classify_btn():
                 styling(particle=st.session_state["particle"])
                 st.markdown(
                     f"""
-                        <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;">
-                        You tried to sound {st.session_state["emotion"].upper()} however you sounded {emotion.upper()}👎</p>
-                    """,
+                            <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;">
+                            You tried to sound {st.session_state["emotion"].upper()} however you sounded {emotion.upper()}👎</p>
+                        """,
                     unsafe_allow_html=True,
                 )
 
@@ -359,8 +327,8 @@ def classify_btn():
         else:
             st.markdown(
                 f"""
-                <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;"> Please generate a prompt and an emotion.</p>
-                """,
+                    <p align="center" style="font-family: monospace; color: #FAF9F6; font-size: 2.5rem;"> Please generate a prompt and an emotion.</p>
+                    """,
                 unsafe_allow_html=True,
             )
     except:
@@ -414,18 +382,3 @@ st.markdown(
    """,
     unsafe_allow_html=True,
 )
-
-
-# Skeleton on Predicted Value of the audio.
-# def state_emotion():
-
-#   # In the case of persistent emotion data from a previous session:
-#   try:
-#     st.write("Are you still", st.session_state.emotion, "?")
-
-# # Prompt 'Yes' or 'No' buttons
-#   # Then let's you predict again
-
-# # Show the Predict Emotion first.
-#   except:
-#     play = st.button('Predict Emotion', key='emotion', on_click=state_emotion)

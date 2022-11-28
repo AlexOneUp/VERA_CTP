@@ -1,4 +1,4 @@
-import librosa as ls  # Music and audio analysis.
+import librosa  # Music and audio analysis.
 import numpy as np  # Data wrangling.
 import os  # Manipulate operating system interfaces.
 import pandas as pd  # Data handling.
@@ -124,7 +124,7 @@ def feature_extraction(data, sampling_rate, frame_length=2048, hop_length=512):
 # each audio file is normally below three seconds.
 # Combine audio data augmentation and audio data feature extraction.
 def get_features(file_path, duration=2.5, offset=0.6):
-    data, sampling_rate = ls.load(file_path, duration=duration, offset=offset)
+    data, sampling_rate = librosa.load(file_path, duration=duration, offset=offset)
 
     # No audio data augmentation.
     audio_1 = feature_extraction(data, sampling_rate)
