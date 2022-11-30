@@ -56,7 +56,7 @@ An audio classification project which takes audio files recorded from human spee
 
 ## NOTEBOOK VIEWER LINK
 
-You can check the Jupyter notebook for [model creation](https://nbviewer.org/github/AlexOneUp/VERA_CTP/blob/main/backend/vera-ctp.ipynb) here.
+You can check the Jupyter notebook for [model creation](https://nbviewer.org/github/AlexOneUp/VERA_CTP/blob/main/backend/vera-notebook.ipynb) here.
 
 ## SPECIAL MENTIONS
 
