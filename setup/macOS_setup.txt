@@ -47,5 +47,8 @@ Instructions to setup your virtual environment using pyenv on macOS:
 
 15. Select the .vera-venv kernel to run the Jupyter Notebook.
 
-15. Run streamlit:
+16. Navigate to frontend:
+    cd frontend
+    
+17. Run streamlit:
     streamlit run app.py

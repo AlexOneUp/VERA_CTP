@@ -59,5 +59,8 @@ Instructions to setup your virtual environment using pyenv on Microsoft Windows:
 
 14. Select the .vera-venv kernel to run the Jupyter Notebook.
 
+14. Navigate to frontend:
+    cd frontend
+    
 15. Run streamlit:
     streamlit run app.py
